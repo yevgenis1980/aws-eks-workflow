@@ -1,4 +1,3 @@
-
 # -----------------------------
 # ALB Security Group (Public)
 # -----------------------------
@@ -15,7 +14,7 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Uncomment if you enable HTTPS
+  # Uncomment if enabling HTTPS
   # ingress {
   #   description = "HTTPS from Internet"
   #   from_port   = 443
@@ -45,41 +44,32 @@ resource "aws_security_group" "eks_nodes_sg" {
   description = "EKS worker nodes"
   vpc_id      = aws_vpc.main.id
 
-  # Node to node communication
+  # Node-to-node communication
   ingress {
-    description = "Node to node"
+    description = "Node to node communication"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     self        = true
   }
 
-  # From ALB to NodePort range
+  # Traffic from ALB to Pods (IP mode)
   ingress {
     description     = "Traffic from ALB"
-    from_port       = 30000
-    to_port         = 32767
+    from_port       = 0
+    to_port         = 65535
     protocol        = "tcp"
     security_groups = [aws_security_group.alb_sg.id]
   }
 
-  # From EKS Control Plane
-  ingress {
-    description     = "From EKS control plane"
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    cidr_blocks     = [aws_vpc.main.cidr_block]
-  }
-
-  # Optional: SSH (remove in prod)
-  ingress {
-    description = "SSH (optional)"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  # Optional: SSH access (lock down or remove in prod)
+  # ingress {
+  #   description = "SSH access"
+  #   from_port   = 22
+  #   to_port     = 22
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["YOUR_IP/32"]
+  # }
 
   egress {
     description = "All outbound"
@@ -92,17 +82,4 @@ resource "aws_security_group" "eks_nodes_sg" {
   tags = {
     Name = "${var.cluster_name}-nodes-sg"
   }
-}
-
-# -----------------------------
-# Allow ALB to talk to Nodes
-# -----------------------------
-resource "aws_security_group_rule" "alb_to_nodes" {
-  type                     = "ingress"
-  from_port                = 30000
-  to_port                  = 32767
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.alb_sg.id
-  security_group_id        = aws_security_group.eks_nodes_sg.id
-  description              = "ALB to NodePort range"
 }
