@@ -51,8 +51,6 @@ resource "aws_eks_cluster" "main" {
   ]
 }
 
-
-
 # -----------------------------
 # Worker Node Role
 # -----------------------------
