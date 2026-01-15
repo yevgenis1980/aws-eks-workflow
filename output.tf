@@ -1,40 +1,32 @@
 
-# ----------------------
-# VPC Outputs
-# ----------------------
+output "cluster_name" {
+  value = aws_eks_cluster.main.name
+}
+
+output "cluster_endpoint" {
+  value = aws_eks_cluster.main.endpoint
+}
+
+output "cluster_certificate_authority" {
+  value = aws_eks_cluster.main.certificate_authority[0].data
+}
+
+output "cluster_region" {
+  value = var.aws_region
+}
+
+output "node_group_name" {
+  value = aws_eks_node_group.main.node_group_name
+}
+
 output "vpc_id" {
-  description = "ID of the main VPC"
-  value       = aws_vpc.main.id
+  value = aws_vpc.main.id
 }
 
-output "public_subnet_ids" {
-  description = "IDs of the public subnets"
-  value       = [for s in aws_subnet.public : s.id]
+output "public_subnets" {
+  value = aws_subnet.public[*].id
 }
 
-output "private_subnet_ids" {
-  description = "IDs of the private subnets"
-  value       = [for s in aws_subnet.private : s.id]
+output "private_subnets" {
+  value = aws_subnet.private[*].id
 }
-
-# ----------------------
-# Internet Gateway / NAT Outputs
-# ----------------------
-output "internet_gateway_id" {
-  description = "ID of the Internet Gateway"
-  value       = aws_internet_gateway.igw.id
-}
-
-output "nat_gateway_id" {
-  description = "ID of the NAT Gateway"
-  value       = aws_nat_gateway.nat.id
-}
-
-# ----------------------
-# Auto Scaling Group
-# ----------------------
-output "asg_name" {
-  description = "Auto Scaling Group name"
-  value       = aws_autoscaling_group.asg.name
-}
-
