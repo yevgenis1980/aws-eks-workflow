@@ -80,3 +80,15 @@ resource "aws_eks_node_group" "main" {
     aws_iam_role_policy_attachment.worker_node_policies
   ]
 }
+
+resource "null_resource" "kubeconfig" {
+  depends_on = [aws_eks_cluster.main]
+
+  provisioner "local-exec" {
+    command = <<EOT
+aws eks update-kubeconfig \
+  --region ${var.aws_region} \
+  --name ${aws_eks_cluster.main.name}
+EOT
+  }
+}
