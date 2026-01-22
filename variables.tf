@@ -11,5 +11,5 @@ variable "cluster_name" {
 
 variable "instance_types" {
   description = "EC2 instance types"
-  default     = ["m6i.large"]
+  default     = ["t3.large"]
 }
