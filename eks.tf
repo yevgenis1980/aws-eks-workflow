@@ -97,7 +97,7 @@ resource "aws_eks_node_group" "main" {
 
   scaling_config {
     desired_size = 2
-    max_size     = 2
+    max_size     = 7
     min_size     = 2
   }
 
@@ -108,7 +108,8 @@ resource "aws_eks_node_group" "main" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.worker_node_policies
+  aws_eks_cluster.main,
+  aws_iam_role_policy_attachment.worker_node_policies
   ]
 }
 
