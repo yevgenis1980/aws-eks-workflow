@@ -101,7 +101,7 @@ resource "aws_eks_node_group" "main" {
     min_size     = 2
   }
 
-  instance_types = ["t3.medium"]
+  instance_types = var.instance_types
 
   tags = {
     Name = "${var.cluster_name}-workers"
