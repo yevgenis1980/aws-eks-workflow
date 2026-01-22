@@ -1,8 +1,15 @@
 
 variable "aws_region" {
-  default = "us-west-2"
+  description = "Region"
+  default = "us-west-2"  
 }
 
 variable "cluster_name" {
-  default = "demo-eks"
+  description = "Cluster Name"
+  default = "eks-cluster"
+}
+
+variable "instance_types" {
+  description = "EC2 instance types"
+  default     = ["m6i.large"]
 }
