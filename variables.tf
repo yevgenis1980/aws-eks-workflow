@@ -11,5 +11,5 @@ variable "cluster_name" {
 
 variable "instance_types" {
   type    = list(string)
-  default  = ["t3.large"]
+  default  = ["t3.medium"]
 }
