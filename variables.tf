@@ -10,6 +10,6 @@ variable "cluster_name" {
 }
 
 variable "instance_types" {
-  description = "EC2 instance types"
-  default     = ["t3.large"]
+  type    = list(string)
+  default  = ["t3.large"]
 }
