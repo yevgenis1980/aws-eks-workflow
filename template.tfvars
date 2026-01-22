@@ -1,5 +1,4 @@
 
-
 ###  ---  Default Template  ---  ###
 aws_region     = "us-west-2"
 k8s_version    = "1.33"
