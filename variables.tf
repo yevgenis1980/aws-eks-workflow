@@ -9,6 +9,11 @@ variable "cluster_name" {
   default = "eks-cluster"
 }
 
+variable "version" {
+  description = "Cluster Version"
+  default = "1.33"
+}
+
 variable "instance_types" {
   type    = list(string)
   default  = ["t3.medium"]
