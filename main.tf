@@ -32,7 +32,7 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
 
   tags = {
-    Name = "lambda-vpc"
+    Name = "eks-vpc"
   }
 }
 
@@ -41,7 +41,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "lambda-igw"
+    Name = "eks-igw"
   }
 }
 
@@ -83,7 +83,7 @@ resource "aws_nat_gateway" "nat" {
   depends_on    = [aws_internet_gateway.igw]
 
   tags = {
-    Name = "lambda-nat"
+    Name = "eks-nat"
   }
 }
 
