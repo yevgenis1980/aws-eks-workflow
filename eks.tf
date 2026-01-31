@@ -113,6 +113,34 @@ resource "aws_eks_node_group" "main" {
   ]
 }
 
+# -----------------------------
+# Additional Node Group
+# -----------------------------
+resource "aws_eks_node_group" "app" {
+  cluster_name    = aws_eks_cluster.main.name
+  node_group_name = "app-ng"
+  node_role_arn   = aws_iam_role.eks_node_role.arn
+  subnet_ids      = aws_subnet.private[*].id
+
+  scaling_config {
+    desired_size = 1
+    max_size     = 4
+    min_size     = 1
+  }
+
+  # Optional: use different instance types
+  instance_types = ["t3.medium"]
+
+  tags = {
+    Name = "${var.cluster_name}-additional-workers"
+    Purpose = "extra-capacity"
+  }
+
+  depends_on = [
+    aws_eks_cluster.main,
+    aws_iam_role_policy_attachment.worker_node_policies
+  ]
+}
 
 resource "null_resource" "kubeconfig" {
   depends_on = [aws_eks_cluster.main]
