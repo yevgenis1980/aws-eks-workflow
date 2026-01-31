@@ -9,7 +9,7 @@ variable "cluster_name" {
   default = "eks-cluster"
 }
 
-variable "version" {
+variable "cluster_version" {
   description = "Cluster Version"
   default = "1.33"
 }
