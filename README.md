@@ -1,8 +1,8 @@
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/234e5f08-d62f-4381-9cef-73d4fb46a6e9" />
 
 
-## AWS | EC2 Autoscaling
-Architecture with public and private subnets, an Application Load Balancer (ALB), EC2 instances, and private resources. It demonstrates how users interact with the system, and how scaling and secure resource access are managed.
+## AWS | EKS Provisioning
+Provisioning an Amazon Elastic Kubernetes Service (EKS) cluster using Terraform allows you to define your entire infrastructure (VPC, subnets, IAM roles, and the cluster itself) as code, ensuring repeatable, version-controlled, and automated deployments.
 
 
 
@@ -11,9 +11,8 @@ Architecture with public and private subnets, an Application Load Balancer (ALB)
 ✅ VPC containing Public and Private Subnets
 ✅ Internet Gateway for outbound internet access
 ✅ NAT Gateway in the public subnet for private subnet egress
-✅ Auto Scaling Group (ASG) using a Launch Template
+✅ Elastic Kubernetes Service using a Launch Template
 ✅ EC2 instances in the ASG, scaling in/out automatically
-✅ Users hitting the system via the public internet
 ✅ Private resources (like RDS, caches) in the private subnets
 ```
 
